@@ -2,23 +2,19 @@
 export default {
 	
 	async fetch(request, env, ctx): Promise<Response> {
-		// 只允许 POST 请求
-		/*
-		if (request.method !== 'POST') {
-			return new Response('Method not allowed. Use POST.', { 
-				status: 405,
-				headers: { 'Access-Control-Allow-Origin': '*' }
-			});
-		}*/
 		try {
 			let question: string = "";
-			/*
-			const body = await request.json() as { q: string };
-			question = body.q;
-			*/
-			if (request.method === 'GET') {
+			if (request.method === 'POST') {
+				const body = await request.json() as { q: string };
+				question = body.q;
+			} else if (request.method === 'GET') {
 				const url = new URL(request.url);
 				question = url.searchParams.get('q') || '';
+			} else {
+				return new Response('forbidden', { 
+					status: 405,
+					headers: { 'Access-Control-Allow-Origin': '*' }
+				});
 			}
 			let res_success = false;
 			let res_result = ""
