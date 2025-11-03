@@ -166,7 +166,8 @@ dist
 !.env.example
 .wrangler/
 
-#custom
+# custom
 .vscode/
 .editorconfig
 .prettierrc
+package-lock.json
